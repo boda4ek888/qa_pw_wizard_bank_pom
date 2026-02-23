@@ -10,12 +10,12 @@ test('Assert manager can add new customer', async ({ page }) => {
     const lastName = faker.person.lastName();
     const postCode = faker.location.zipCode();
 
+    //navigates directly to the add-customer URL which bypasses clicking the Bank Manager Login button
     await addCustomerPage.open();
     await addCustomerPage.fillFirstName(firstName);
     await addCustomerPage.fillLastName(lastName);
     await addCustomerPage.fillPostCode(postCode);
     await addCustomerPage.clickAddCustomerButton();
-    await page.reload();
     await customersListPage.clickCustomersButton();
     await customersListPage.assertFirstName(firstName);
     await customersListPage.assertLastName(lastName);

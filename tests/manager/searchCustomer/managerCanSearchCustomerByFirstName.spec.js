@@ -22,12 +22,11 @@ test.beforeEach(async ({ page }) => {
   await addCustomerPage.fillLastName(lastName);
   await addCustomerPage.fillPostCode(postalCode);
   await addCustomerPage.clickAddCustomerButton();
-  await page.reload();
-
 });
 
-test('Assert manager can search customer by First Name', async ({}) => {
+test('Assert manager can search customer by First Name', async () => {
   await customersListPage.open();
+  await customersListPage.assertTableIsVisible();
   await customersListPage.fillSearchField(firstName);
   await customersListPage.assertFirstName(firstName);
   await customersListPage.assertLastName(lastName);

@@ -30,4 +30,8 @@ export class OpenAccountPage {
     const fullName = `${firstName} ${lastName}`;
     await this.customerDropdown.selectOption({ label: fullName });
   }
+
+  async reload() {
+    await this.page.reload();
+  }
 }
