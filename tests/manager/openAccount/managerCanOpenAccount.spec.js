@@ -7,11 +7,15 @@ import {CustomersListPage} from "../../../src/pages/manager/CustomersListPage";
 let addCustomerPage;
 let openAccountPage;
 let customerListPage;
-const firstName = faker.person.firstName();
-const lastName = faker.person.lastName();
-const postCode = faker.location.zipCode();
+let firstName;
+let lastName;
+let postCode;
 
 test.beforeEach(async ({ page }) => {
+    firstName = faker.person.firstName();
+    lastName = faker.person.lastName();
+    postCode = faker.location.zipCode();
+
     addCustomerPage = new AddCustomerPage(page);
     openAccountPage = new OpenAccountPage(page);
     customerListPage = new CustomersListPage(page);
@@ -21,16 +25,14 @@ test.beforeEach(async ({ page }) => {
     await addCustomerPage.fillLastName(lastName);
     await addCustomerPage.fillPostCode(postCode);
     await addCustomerPage.clickAddCustomerButton();
-    await page.reload();
 });
 
 
-test('Assert manager can add new customer', async ({ page }) => {
+test('Assert manager can open account for a customer', async () => {
     await openAccountPage.open();
     await openAccountPage.selectCustomer(firstName, lastName);
     await openAccountPage.selectCurrency('Dollar');
     await openAccountPage.clickProcessButton();
-    await page.reload();
     await customerListPage.clickCustomersButton();
     await customerListPage.assertAccountNumberNotEmpty();
 });

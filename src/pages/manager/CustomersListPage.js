@@ -5,12 +5,12 @@ export class CustomersListPage {
     this.page = page;
     this.tableBody = page.getByRole('table').getByRole('rowgroup').last();
     this.tableRows = this.tableBody.getByRole('row');
-    this.lastTableRow = page.getByRole('row').last();
+    this.lastTableRow = this.tableBody.getByRole('row').last();
     this.firstNameCell = this.lastTableRow.getByRole('cell').nth(0);
     this.lastNameCell = this.lastTableRow.getByRole('cell').nth(1);
     this.postCodeCell = this.lastTableRow.getByRole('cell').nth(2);
     this.accountNumberCell = this.lastTableRow.getByRole('cell').nth(3);
-    this.deleteButtonCell = this.lastTableRow.getByRole('button', {name: 'Delete'});
+    this.deleteButtonCell = page.getByRole('button', {name: 'Delete'});
     this.customersButton = page.getByRole('button', {
       name: 'Customers',
     });
@@ -21,22 +21,31 @@ export class CustomersListPage {
     await this.page.goto('/angularJs-protractor/BankingProject/#/manager/list');
   }
 
-  async clickDeleteButton() {
-    await this.deleteButtonCell.click();
+  async clickDeleteUserButton(firstName, lastName) {
+    const row = this.tableRows.filter({
+      hasText: `${firstName} ${lastName}`
+    });
+    await row.locator(this.deleteButtonCell).click();
   }
 
   async assertFirstName(expectedFirstName) {
     await expect(this.firstNameCell).toContainText(expectedFirstName);
   }
   async assertFirstNameRemoved(expectedFirstName) {
-    await expect(this.firstNameCell).not.toContainText(expectedFirstName);
+    const rowWithFirstName = this.tableRows.filter({
+      hasText: expectedFirstName
+    });
+    await expect(rowWithFirstName).toBeHidden();
   }
 
   async assertLastName(expectedLastName) {
     await expect(this.lastNameCell).toContainText(expectedLastName);
   }
   async assertLastNameRemoved(expectedLastName) {
-    await expect(this.lastNameCell).not.toContainText(expectedLastName);
+    const rowWithLastName = this.tableRows.filter({
+      hasText: expectedLastName
+    });
+    await expect(rowWithLastName).toBeHidden();
   }
 
   async assertPostCode(expectedPostCode) {
@@ -61,5 +70,13 @@ export class CustomersListPage {
 
   async assertOneSearchResultReturned() {
     await expect(this.tableRows).toHaveCount(1)
+  }
+
+  async reload() {
+    await this.page.reload();
+  }
+
+  async assertTableIsVisible() {
+    await expect(this.tableBody).toBeVisible();
   }
 }
