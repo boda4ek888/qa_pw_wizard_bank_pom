@@ -28,8 +28,6 @@ test('Assert manager can search customer by Postal Code',  async () => {
   await customersListPage.open();
   await customersListPage.assertTableIsVisible();
   await customersListPage.fillSearchField(postalCode);
-  await customersListPage.assertFirstName(firstName);
-  await customersListPage.assertLastName(lastName);
-  await customersListPage.assertPostCode(postalCode);
+  await customersListPage.assertCustomerIsPresent(firstName, lastName, postalCode);
   await customersListPage.assertOneSearchResultReturned();
 });

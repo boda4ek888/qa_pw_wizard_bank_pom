@@ -19,6 +19,7 @@ export class OpenAccountPage {
   }
 
   async clickProcessButton() {
+    this.page.once('dialog', dialog => dialog.accept());
     await this.processButton.click();
   }
 
@@ -29,9 +30,5 @@ export class OpenAccountPage {
   async selectCustomer(firstName, lastName) {
     const fullName = `${firstName} ${lastName}`;
     await this.customerDropdown.selectOption({ label: fullName });
-  }
-
-  async reload() {
-    await this.page.reload();
   }
 }

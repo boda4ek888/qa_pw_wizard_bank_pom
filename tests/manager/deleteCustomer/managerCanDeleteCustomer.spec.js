@@ -27,6 +27,5 @@ test.beforeEach(async ({ page }) => {
 test('Assert manager can delete customer', async () => {
     await customersListPage.open();
     await customersListPage.clickDeleteUserButton(firstName, lastName);
-    await customersListPage.assertFirstNameRemoved(firstName);
-    await customersListPage.assertLastNameRemoved(lastName);
+    await customersListPage.assertCustomerIsRemoved(firstName, lastName);
 });

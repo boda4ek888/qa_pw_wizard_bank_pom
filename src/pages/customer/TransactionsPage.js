@@ -15,9 +15,6 @@ export class TransactionsPage {
   async open() {
     await this.page.goto('/angularJs-protractor/BankingProject/#/listTx');
   }
-  async reload() {
-    await this.page.reload();
-  }
 
   async assertFirstRowAmountContainsText(amount) {
     await expect(this.firstRowAmountCell).toContainText(amount);
