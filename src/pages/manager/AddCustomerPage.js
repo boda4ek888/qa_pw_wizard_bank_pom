@@ -5,7 +5,6 @@ export class AddCustomerPage {
     this.lastNameInput = page.getByPlaceholder('Last Name');
     this.postCodeInput = page.getByPlaceholder('Post Code');
     this.addCustomerButton = page.getByRole('form').getByRole('button', { name: 'Add Customer' });
-    this.dialogWindow = page.waitForEvent('dialog');
   }
 
   async open() {
@@ -28,9 +27,5 @@ export class AddCustomerPage {
   async clickAddCustomerButton() {
     this.page.once('dialog', dialog => dialog.accept());
     await this.addCustomerButton.click();
-  }
-
-  async reload() {
-    await this.page.reload();
   }
 }

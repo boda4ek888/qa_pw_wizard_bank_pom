@@ -17,8 +17,6 @@ test('Assert manager can add new customer', async ({ page }) => {
     await addCustomerPage.fillPostCode(postCode);
     await addCustomerPage.clickAddCustomerButton();
     await customersListPage.clickCustomersButton();
-    await customersListPage.assertFirstName(firstName);
-    await customersListPage.assertLastName(lastName);
-    await customersListPage.assertPostCode(postCode);
-    await customersListPage.assertAccountNumberIsEmpty();
+    await customersListPage.assertCustomerIsPresent(firstName, lastName, postCode);
+    await customersListPage.assertAccountNumberIsEmpty(firstName, lastName);
 });

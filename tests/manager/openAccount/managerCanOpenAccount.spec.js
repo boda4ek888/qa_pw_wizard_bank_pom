@@ -33,6 +33,6 @@ test('Assert manager can open account for a customer', async () => {
     await openAccountPage.selectCustomer(firstName, lastName);
     await openAccountPage.selectCurrency('Dollar');
     await openAccountPage.clickProcessButton();
-    await customerListPage.clickCustomersButton();
-    await customerListPage.assertAccountNumberNotEmpty();
+    await customerListPage.open();
+    await customerListPage.assertAccountNumberNotEmpty(firstName, lastName);
 });
